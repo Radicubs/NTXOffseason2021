@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveBase;
@@ -21,11 +22,12 @@ public class RobotContainer {
   private final DriveBase driveBase = new DriveBase();
 
   private final TankDrive m_autoCommand = new TankDrive(driveBase);
-
+  public static Joystick controller = new Joystick(RobotConstants.JOYSTICK);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    
   }
 
   /**

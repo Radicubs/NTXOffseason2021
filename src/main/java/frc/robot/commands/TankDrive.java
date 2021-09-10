@@ -4,7 +4,10 @@
 
 package frc.robot.commands;
 
+import frc.robot.Robot;
+import frc.robot.RobotConstants;
 import frc.robot.subsystems.DriveBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
@@ -30,7 +33,13 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveBase.setValues(-0.07, -0.07, 0.07, 0.07);
+
+    double left = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_Y_AXIS) / 10;
+    double right = Robot.robotContainer.controller.getRawAxis(RobotConstants.RIGHT_Y_AXIS) / 10;
+
+
+
+    driveBase.setValues(right, right, -left, -left);
   }
 
   // Called once the command ends or is interrupted.

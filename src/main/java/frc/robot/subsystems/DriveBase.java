@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
 import frc.robot.commands.TankDrive;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -24,7 +23,7 @@ public class DriveBase extends SubsystemBase {
   private TalonFX leftMotorBack;
 
   public DriveBase() {
-    
+
     
     // motors
     rightMotorFront = new TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
@@ -58,5 +57,11 @@ public class DriveBase extends SubsystemBase {
     leftMotorFront.set(ControlMode.PercentOutput, m4);
   
   }
+
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+  }
+
   
 }

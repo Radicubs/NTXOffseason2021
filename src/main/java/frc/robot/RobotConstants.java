@@ -18,4 +18,13 @@ public class RobotConstants {
   public static final int INDEX_LEFT = 10;
   public static final int ELEVATOR_BACK = 9;
   public static final int ELEVATOR_FRONT = 7;
+
+  //Joystick
+  public static final int LEFT_X_AXIS = 0;
+  public static final int LEFT_Y_AXIS = 1;
+  public static final int LT_AXIS = 2;
+  public static final int RT_AXIS = 3;
+  public static final int RIGHT_X_AXIS = 4;
+  public static final int RIGHT_Y_AXIS = 5;
+  public static final int JOYSTICK = 0;
 }
