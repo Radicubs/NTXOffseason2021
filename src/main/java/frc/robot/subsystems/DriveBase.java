@@ -5,13 +5,14 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
+import frc.robot.commands.TankDrive;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-public class DriveBase extends SubsystemBase implements Subsystem {
+public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   // Right Motors
@@ -44,6 +45,7 @@ public class DriveBase extends SubsystemBase implements Subsystem {
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
 
+    setDefaultCommand(new TankDrive(this));
   }
 
   @Override
@@ -56,11 +58,5 @@ public class DriveBase extends SubsystemBase implements Subsystem {
     leftMotorFront.set(ControlMode.PercentOutput, m4);
   
   }
-
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
-
   
 }

@@ -30,7 +30,7 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveBase.setValues(0.07, 0.07, -0.07, -0.07);
+    driveBase.setValues(-0.07, -0.07, 0.07, 0.07);
   }
 
   // Called once the command ends or is interrupted.
