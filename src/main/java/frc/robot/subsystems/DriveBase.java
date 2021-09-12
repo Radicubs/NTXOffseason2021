@@ -23,7 +23,6 @@ public class DriveBase extends SubsystemBase {
   private TalonFX leftMotorBack;
 
   public DriveBase() {
-
     
     // motors
     rightMotorFront = new TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
@@ -37,13 +36,15 @@ public class DriveBase extends SubsystemBase {
     leftMotorFront.configFactoryDefault();
     leftMotorBack.configFactoryDefault();
 
+    leftMotorBack.getSelectedSensorVelocity();
+
     // Might interfere with PID
 
     leftMotorFront.setNeutralMode(NeutralMode.Brake);
     leftMotorBack.setNeutralMode(NeutralMode.Brake);
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
-
+    
     setDefaultCommand(new TankDrive(this));
   }
 
@@ -61,6 +62,12 @@ public class DriveBase extends SubsystemBase {
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+  }
+
+  public double[] getEncoderValues(){
+    double[] vals = {rightMotorBack.getSelectedSensorPosition(), rightMotorFront.getSelectedSensorPosition(), leftMotorBack.getSelectedSensorPosition(), leftMotorFront.getSelectedSensorPosition(),
+    };
+    return vals;
   }
 
   
