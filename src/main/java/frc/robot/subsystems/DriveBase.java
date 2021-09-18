@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import me.wobblyyyy.pathfinder2.kinematics.MeccanumState;
+import me.wobblyyyy.pathfinder2.kinematics.RelativeMeccanumKinematics;
 
 public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -30,7 +32,7 @@ public class DriveBase extends SubsystemBase {
 
     leftMotorFront = new TalonFX(RobotConstants.LEFT_FALCON_FRONT);
     leftMotorBack = new TalonFX(RobotConstants.LEFT_FALCON_BACK);
-
+    m_robotDrive = new MecanumDrive(leftMotorFront, leftMotorBack, rightMotorFront, rightMotorBack);
     rightMotorFront.configFactoryDefault();
     rightMotorBack.configFactoryDefault();
     leftMotorFront.configFactoryDefault();
@@ -58,7 +60,13 @@ public class DriveBase extends SubsystemBase {
     leftMotorFront.set(ControlMode.PercentOutput, m4);
   
   }
+public void setValues(double ySpeed, double xSpeed, double zRotation)
+{
+  m_robotDrive.driveCartesian(xSpeed, ySpeed, zRotation);
 
+{
+
+}
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
