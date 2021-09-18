@@ -7,11 +7,10 @@ package frc.robot.commands;
 import frc.robot.Robot;
 import frc.robot.RobotConstants;
 import frc.robot.subsystems.DriveBase;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
-public class MeccanumDrive extends CommandBase {
+public class MecanumDriveControl extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveBase driveBase;
 
@@ -20,7 +19,7 @@ public class MeccanumDrive extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MeccanumDrive(DriveBase subsystem) {
+  public MecanumDriveControl(DriveBase subsystem) {
     driveBase = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -34,9 +33,9 @@ public class MeccanumDrive extends CommandBase {
   @Override
   public void execute() {
 
-    double left = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_Y_AXIS) / 10;
-    double right = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_X_AXIS) / 10;
-    double zRot = Robot.robotCOntainer.controller.getRawAxis(RobotConstants.RIGHT_X_AXIS) / 10;
+    double left = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_Y_AXIS) / 3;
+    double right = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_X_AXIS) / 3;
+    double zRot = Robot.robotContainer.controller.getRawAxis(RobotConstants.RIGHT_X_AXIS) / 3;
 
 
     driveBase.setValues(right,left, zRot);
