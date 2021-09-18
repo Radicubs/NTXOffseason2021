@@ -5,34 +5,35 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
-import frc.robot.commands.TankDrive;
+import frc.robot.commands.MecanumDriveControl;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import me.wobblyyyy.pathfinder2.kinematics.MeccanumState;
-import me.wobblyyyy.pathfinder2.kinematics.RelativeMeccanumKinematics;
 
 public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   // Right Motors
-  private TalonFX rightMotorFront;
-  private TalonFX rightMotorBack;
+  private WPI_TalonFX rightMotorFront;
+  private WPI_TalonFX rightMotorBack;
 
   // Left Motors
-  private TalonFX leftMotorFront;
-  private TalonFX leftMotorBack;
+  private WPI_TalonFX leftMotorFront;
+  private WPI_TalonFX leftMotorBack;
+
+  private MecanumDrive m_robotDrive;
 
   public DriveBase() {
 
     
     // motors
-    rightMotorFront = new TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
-    rightMotorBack = new TalonFX(RobotConstants.RIGHT_FALCON_BACK);
+    rightMotorFront = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
+    rightMotorBack = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_BACK);
 
-    leftMotorFront = new TalonFX(RobotConstants.LEFT_FALCON_FRONT);
-    leftMotorBack = new TalonFX(RobotConstants.LEFT_FALCON_BACK);
+    leftMotorFront = new WPI_TalonFX(RobotConstants.LEFT_FALCON_FRONT);
+    leftMotorBack = new WPI_TalonFX(RobotConstants.LEFT_FALCON_BACK);
     m_robotDrive = new MecanumDrive(leftMotorFront, leftMotorBack, rightMotorFront, rightMotorBack);
     rightMotorFront.configFactoryDefault();
     rightMotorBack.configFactoryDefault();
@@ -46,7 +47,7 @@ public class DriveBase extends SubsystemBase {
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
 
-    setDefaultCommand(new TankDrive(this));
+    setDefaultCommand(new MecanumDriveControl(this));
   }
 
   @Override
@@ -61,11 +62,9 @@ public class DriveBase extends SubsystemBase {
   }
 public void setValues(double ySpeed, double xSpeed, double zRotation)
 {
-  m_robotDrive.driveCartesian(xSpeed, ySpeed, zRotation);
-
-{
-
+  m_robotDrive.driveCartesian(ySpeed, xSpeed, zRotation);
 }
+
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
