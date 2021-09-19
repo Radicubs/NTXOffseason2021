@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
 import frc.robot.commands.MecanumDriveControl;
+import frc.robot.commands.PIDDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -26,7 +27,7 @@ public class DriveBase extends SubsystemBase {
   private MecanumDrive m_robotDrive;
 
   public DriveBase() {
-    
+    //Redone for PID
     // motors
     rightMotorFront = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
     rightMotorBack = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_BACK);
@@ -47,13 +48,11 @@ public class DriveBase extends SubsystemBase {
     leftMotorBack.setNeutralMode(NeutralMode.Brake);
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
-<<<<<<< HEAD
-    
-    setDefaultCommand(new TankDrive(this));
-=======
 
-    setDefaultCommand(new MecanumDriveControl(this));
->>>>>>> meccanum-drive
+    PIDDrive drive = new PIDDrive(this);
+    drive.setSetPoint(10);
+
+    setDefaultCommand(drive);
   }
 
   @Override
@@ -66,6 +65,39 @@ public class DriveBase extends SubsystemBase {
     leftMotorFront.set(ControlMode.PercentOutput, m4);
   
   }
+
+  public void setRightBackMotorValue(double speed) {
+    rightMotorBack.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setRightFrontMotorValue(double speed) {
+    rightMotorFront.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setLeftBackMotorValue(double speed) {
+    leftMotorBack.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setLeftFrontMotorValue(double speed) {
+    leftMotorFront.set(ControlMode.PercentOutput, speed);
+  }
+
+  public double getRightBackMotorEncoder() {
+    return rightMotorBack.getSelectedSensorPosition();
+  }
+
+  public double getRightFrontMotorEncoder() {
+    return rightMotorFront.getSelectedSensorPosition();
+  }
+
+  public double getLeftBackMotorEncoder() {
+    return leftMotorBack.getSelectedSensorPosition();
+  }
+
+  public double getLeftFrontMotorEncoder() {
+    return leftMotorFront.getSelectedSensorPosition();
+  }
+
 public void setValues(double ySpeed, double xSpeed, double zRotation)
 {
   m_robotDrive.driveCartesian(ySpeed, xSpeed, zRotation);
