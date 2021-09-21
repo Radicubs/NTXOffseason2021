@@ -19,15 +19,20 @@ public class Elevator extends SubsystemBase {
     // Set Motors to default and neutral
     elevatorBack.restoreFactoryDefaults();
     elevatorFront.restoreFactoryDefaults();
+
+    elevatorBack.setSmartCurrentLimit(2);
+    elevatorBack.setSecondaryCurrentLimit(2);
+    elevatorFront.setSmartCurrentLimit(2);
+    elevatorFront.setSecondaryCurrentLimit(2);
   }
 
   public void elevatorUp(double speed) {
     // elevatorBack.set(-0.75);
-    // System.out.println("Back current: " + elevatorBack.getOutputCurrent());
-    // System.out.println("Back voltage: " +
+    System.out.println("Back current: " + elevatorBack.getOutputCurrent());
+    // System.out.println("Back volta∂∂∂∂ge: " +
     // elevatorBack.getVoltageCompensationNominalVoltage());
 
-    /*
+    /* 
      * if (elevatorBack.getOutputCurrent() < 0.1) { elevatorBack.set(speed); }
      */
     elevatorFront.set(speed / 2);
@@ -37,6 +42,9 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     elevatorBack.set(-0.25);
     elevatorFront.set(0.25);
+    System.out.println("Back current: " + elevatorBack.getOutputCurrent());
+    System.out.println("Front current: " + elevatorFront.getOutputCurrent());
+
   }
 
   //@Override

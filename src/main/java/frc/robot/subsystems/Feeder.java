@@ -21,6 +21,11 @@ public class Feeder extends SubsystemBase {
     // Set Motors to default and neutral
     feederMotorOne.restoreFactoryDefaults();
     feederMotorTwo.restoreFactoryDefaults();
+
+    feederMotorOne.setSmartCurrentLimit(5);
+    feederMotorOne.setSecondaryCurrentLimit(5);
+    feederMotorTwo.setSmartCurrentLimit(5);
+    feederMotorTwo.setSecondaryCurrentLimit(5);
   }
 
   @Override
