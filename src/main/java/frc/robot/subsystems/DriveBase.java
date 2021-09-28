@@ -13,6 +13,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.MecanumDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.MecanumDriveWheelSpeeds;
+
 public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
@@ -25,6 +32,12 @@ public class DriveBase extends SubsystemBase {
   private WPI_TalonFX leftMotorBack;
 
   private MecanumDrive m_robotDrive;
+
+  private final Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
+  private final Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
+  private final Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
+  private final Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
+
 
   public DriveBase() {
     //Redone for PID
@@ -51,6 +64,8 @@ public class DriveBase extends SubsystemBase {
 
     PIDDrive drive = new PIDDrive(this);
     drive.setSetPoint(10);
+
+    leftMotorBack.
 
     setDefaultCommand(drive);
   }
@@ -101,6 +116,15 @@ public class DriveBase extends SubsystemBase {
 public void setValues(double ySpeed, double xSpeed, double zRotation)
 {
   m_robotDrive.driveCartesian(ySpeed, xSpeed, zRotation);
+}
+
+public MecanumDriveWheelSpeeds getSpeeds() { 
+  return new MecanumDriveWheelSpeeds(
+      ((leftMotorFront.getSelectedSensorVelocity() * 10 * 0.175 * Math.PI) / (2048 * RobotConstants.kGearRatio)),
+      ((rightMotorFront.getSelectedSensorVelocity() * 10 * 0.175 * Math.PI) / (2048 * RobotConstants.kGearRatio)),
+      ((leftMotorBack.getSelectedSensorVelocity() * 10 * 0.175 * Math.PI) / (2048 * RobotConstants.kGearRatio)),
+      ((rightMotorBack.getSelectedSensorVelocity() * 10 * 0.175 * Math.PI) / (2048 * RobotConstants.kGearRatio))
+  );
 }
 
   @Override
