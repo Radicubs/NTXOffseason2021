@@ -27,4 +27,28 @@ public class RobotConstants {
   public static final int RIGHT_X_AXIS = 4;
   public static final int RIGHT_Y_AXIS = 5;
   public static final int JOYSTICK = 0;
-}
+
+  //Gear Ratio?
+  public static final double kGearRatio = 1;
+
+  // PID Constants - need to be changed
+  public static final double fl_kP = 0.127;
+  public static final double bl_kP = 0.127;
+  public static final double fr_kP = 0.127;
+  public static final double br_kP = 0.127;
+
+  // Measurements in meters - need to be changed
+  public static final double kWheelRadius = 0.0875;
+  public static final double kEncoderTicksPerRev = 2048;
+  public static final double kFrontRight_y = -1;
+        public static final double kFrontRight_x = 0.875;
+        public static final double kFrontLeft_y = 1;
+        public static final double kFrontLeft_x = 0.875;
+        public static final double kBackLeft_y = 1;
+        public static final double kBackLeft_x = -0.875;
+        public static final double kBackRight_y = -1;
+        public static final double kBackRight_x = -0.875;
+        public static final double kS = 0.495;
+        public static final double kV = 2.04;
+        public static final double kA = 0.119;
+      }
