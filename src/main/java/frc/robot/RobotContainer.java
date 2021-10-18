@@ -23,14 +23,14 @@ import com.kauailabs.navx.frc.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveBase driveBase = new DriveBase();
-  public static AHRS ahrs = null;
+  public static AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
   public double init_angle = 0;
 private final TankDrive m_autoCommand = new TankDrive(driveBase);
   public static Joystick controller = new Joystick(RobotConstants.JOYSTICK);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     try {
-      ahrs = new AHRS(SerialPort.Port.kUSB);
+      //ahrs = new AHRS(SerialPort.Port.kUSB);
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
     }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -50,7 +51,7 @@ public class DriveBase extends SubsystemBase {
     m_backRightLocation
   );
 
-  MecanumDriveOdometry m_odometry;
+  MecanumDriveOdometry m_odometry = new MecanumDriveOdometry(m_kinematics, new Rotation2d(), new Pose2d());
 
   PIDController frontLeftPID = new PIDController(RobotConstants.fl_kP, 0, 0);
   PIDController frontRightPID = new PIDController(RobotConstants.fr_kP, 0, 0);
@@ -58,10 +59,6 @@ public class DriveBase extends SubsystemBase {
   PIDController backRightPID = new PIDController(RobotConstants.br_kP, 0, 0);
 
   AHRS m_Gyro = RobotContainer.ahrs;
-
-  Pose2d pose = new Pose2d();
-
-  SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(RobotConstants.kS, RobotConstants.kV, RobotConstants.kA);
 
   public DriveBase() {
     //Redone for PID
@@ -84,6 +81,8 @@ public class DriveBase extends SubsystemBase {
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
 
+    initializeOdometry();
+
     MecanumDriveControl drive = new MecanumDriveControl(this);
     //drive.setSetPoint(10);
 
@@ -101,44 +100,14 @@ public class DriveBase extends SubsystemBase {
   
   }
 
-  public void setRightBackMotorValue(double speed) {
-    rightMotorBack.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void setRightFrontMotorValue(double speed) {
-    rightMotorFront.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void setLeftBackMotorValue(double speed) {
-    leftMotorBack.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void setLeftFrontMotorValue(double speed) {
-    leftMotorFront.set(ControlMode.PercentOutput, speed);
-  }
-
-  public double getRightBackMotorEncoder() {
-    return rightMotorBack.getSelectedSensorPosition();
-  }
-
-  public double getRightFrontMotorEncoder() {
-    return rightMotorFront.getSelectedSensorPosition();
-  }
-
-  public double getLeftBackMotorEncoder() {
-    return leftMotorBack.getSelectedSensorPosition();
-  }
-
-  public double getLeftFrontMotorEncoder() {
-    return leftMotorFront.getSelectedSensorPosition();
-  }
 
 public void setValues(double ySpeed, double xSpeed, double zRotation)
 {
+  getSpeeds();
   var mecanumDriveWheelSpeeds = m_kinematics.toWheelSpeeds(
         	new ChassisSpeeds(ySpeed, xSpeed, zRotation)
 		);
-    	mecanumDriveWheelSpeeds.normalize(1);
+     // mecanumDriveWheelSpeeds.normalize(1);
 		setSpeeds(mecanumDriveWheelSpeeds);
 		
   	}
@@ -146,6 +115,7 @@ public void setValues(double ySpeed, double xSpeed, double zRotation)
 
 
 public MecanumDriveWheelSpeeds getSpeeds() { 
+  System.out.println(leftMotorFront.getSelectedSensorVelocity());
   return new MecanumDriveWheelSpeeds(
       ((leftMotorFront.getSelectedSensorVelocity() * 10 * 2*RobotConstants.kWheelRadius * Math.PI) / (2048 * RobotConstants.kGearRatio)),
       ((rightMotorFront.getSelectedSensorVelocity() * 10 * 2*RobotConstants.kWheelRadius * Math.PI) / (2048 * RobotConstants.kGearRatio)),
@@ -204,27 +174,24 @@ public MecanumDriveWheelSpeeds getSpeeds() {
     return Math.IEEEremainder(m_Gyro.getAngle(), 360) * -1;
   } 
 
-  public Pose2d getPose() {
-    return pose;
-  }
-
   public MecanumDriveKinematics getKinematics() {
     return m_kinematics;
   }
 
   public void setSpeeds(MecanumDriveWheelSpeeds speeds) {
-    leftMotorFront.selectProfileSlot(0, 0);
-    rightMotorFront.selectProfileSlot(0, 0);
-    leftMotorBack.selectProfileSlot(0, 0);
-    rightMotorBack.selectProfileSlot(0, 0);
-
     ControlMode v = ControlMode.Velocity;
     double n = 2048 / 10 / (2*Math.PI*RobotConstants.kWheelRadius);
     double setLFVelocity = speeds.frontLeftMetersPerSecond * n;
 		double setRFVelocity = speeds.frontRightMetersPerSecond * n;
 		double setLRVelocity = speeds.rearLeftMetersPerSecond * n;
 		double setRRVelocity = speeds.rearRightMetersPerSecond * n;
-    System.out.println(setLFVelocity);
+    System.out.println("frontLeft: " + setLFVelocity);
+    System.out.println("frontRight: " + setRFVelocity);
+
+    System.out.println("backLeft: " + setLRVelocity);
+
+    System.out.println("beckRight: " + setRRVelocity);
+
 		leftMotorFront.set(v, setLFVelocity);
 		rightMotorFront.set(v, setRFVelocity);
 		leftMotorBack.set(v, setLRVelocity);
