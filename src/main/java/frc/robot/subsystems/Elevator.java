@@ -35,13 +35,13 @@ public class Elevator extends SubsystemBase {
     /* 
      * if (elevatorBack.getOutputCurrent() < 0.1) { elevatorBack.set(speed); }
      */
-    elevatorFront.set(speed / 2);
+    elevatorBack.set(speed / 2);
   }
 
   @Override
   public void periodic() {
     elevatorBack.set(-0.25);
-    elevatorFront.set(0.25);
+   // elevatorFront.set(0.25);
     System.out.println("Back current: " + elevatorBack.getOutputCurrent());
     System.out.println("Front current: " + elevatorFront.getOutputCurrent());
 
