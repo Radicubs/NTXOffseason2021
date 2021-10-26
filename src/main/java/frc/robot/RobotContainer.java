@@ -13,6 +13,7 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +28,9 @@ public class RobotContainer {
   private final Elevator elevetor = new Elevator();
   private final Elevator elevator = elevetor;
   private final Shooter shooter = new Shooter();
+  public final JoystickButton feeder_button = new JoystickButton(controller, RobotConstants.A_BUTTON);
+  public final JoystickButton elevator_button = new JoystickButton(controller, RobotConstants.B_BUTTON);
+  public final JoystickButton shooter_button = new JoystickButton(controller, RobotConstants.X_BUTTON);
 
   private final TankDrive m_autoCommand = new TankDrive(driveBase);
   public static Joystick controller = new Joystick(RobotConstants.JOYSTICK);
@@ -43,7 +47,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  public void configureButtonBindings() {}
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
