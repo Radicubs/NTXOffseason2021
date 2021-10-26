@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.MecanumDriveControl;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -68,6 +69,16 @@ public void setValues(double ySpeed, double xSpeed, double zRotation)
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
+    RobotContainer r = new RobotContainer();
+    if (r.feeder_button.get()){
+      //Run feeder
+    }
+    if (r.elevator_button.get()){
+      //Run elevator
+    }
+    if (r.shooter_button.get()){
+      //Run shooter
+    }
   }
 
   
