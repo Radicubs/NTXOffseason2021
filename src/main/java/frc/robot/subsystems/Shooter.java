@@ -53,6 +53,15 @@ public class Shooter extends SubsystemBase {
     shooterMotorTwo.set(ControlMode.PercentOutput, -0.5);
   }
 
+  public void shooterOn() {
+    
+    speed = 0.25;
+  }
+
+  public void shooterOff() {
+    
+    speed = 0;
+  }
   //@Override
   //public void initDefaultCommand() {
   //  setDefaultCommand(new RunShooter(speed));

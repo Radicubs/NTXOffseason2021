@@ -30,13 +30,23 @@ public class Feeder extends SubsystemBase {
 
   @Override
   public void periodic() {
-    feederMotorOne.set(0.25);
-    feederMotorTwo.set(-0.25);
+    feederMotorOne.set(speed);
+    feederMotorTwo.set(-speed);
   }
 
   public void feederIn(double speed) {
     feederMotorOne.set(speed);
     feederMotorTwo.set(-speed);
+  }
+
+  public void feederOn() {
+    
+    speed = 0.25;
+  }
+
+  public void feederOff() {
+    
+    speed = 0.25;
   }
 
   //@Override

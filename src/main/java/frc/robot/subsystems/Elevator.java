@@ -47,6 +47,15 @@ public class Elevator extends SubsystemBase {
 
   }
 
+  public void elevatorOn() {
+    
+    speed = 0.25;
+  }
+
+  public void elevatorOff() {
+    
+    speed = 0;
+  }
   //@Override
   //public void initDefaultCommand() {
   //  setDefaultCommand(new RunElevator(speed));
