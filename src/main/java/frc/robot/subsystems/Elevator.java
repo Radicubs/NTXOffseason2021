@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
+import frc.robot.commands.ElevatorCommand;
 
 public class Elevator extends SubsystemBase {
   private CANSparkMax elevatorBack;
@@ -24,6 +25,8 @@ public class Elevator extends SubsystemBase {
     elevatorBack.setSecondaryCurrentLimit(2);
     elevatorFront.setSmartCurrentLimit(2);
     elevatorFront.setSecondaryCurrentLimit(2);
+
+    setDefaultCommand(new ElevatorCommand(this));
   }
 
   public void elevatorUp(double speed) {
@@ -40,10 +43,8 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    elevatorBack.set(-0.25);
-   // elevatorFront.set(0.25);
-    System.out.println("Back current: " + elevatorBack.getOutputCurrent());
-    System.out.println("Front current: " + elevatorFront.getOutputCurrent());
+    elevatorBack.set(-speed);
+    elevatorFront.set(speed);
 
   }
 

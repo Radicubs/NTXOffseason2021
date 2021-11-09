@@ -37,8 +37,6 @@ public class TankDrive extends CommandBase {
     double left = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_Y_AXIS) / 10;
     double right = Robot.robotContainer.controller.getRawAxis(RobotConstants.RIGHT_Y_AXIS) / 10;
 
-
-
     driveBase.setValues(right, right, -left, -left);
   }
 

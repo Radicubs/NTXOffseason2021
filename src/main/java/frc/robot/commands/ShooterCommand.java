@@ -19,7 +19,7 @@ public class ShooterCommand extends CommandBase {
     public void initialize(){}
 
     public void execute(){
-        if(Robot.robotContainer.controller.getRawButton(RobotConstants.LT_AXIS)) shoot.shooterOn();
+        if(Robot.robotContainer.controller.getRawButton(RobotConstants.A_BUTTON)) shoot.shooterOn();
         else shoot.shooterOff();
     }
 

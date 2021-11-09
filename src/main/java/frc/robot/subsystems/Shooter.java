@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
 import frc.robot.commands.ShooterCommand;
@@ -25,8 +24,8 @@ public class Shooter extends SubsystemBase {
     shooterMotorOne.configFactoryDefault();
     shooterMotorTwo.configFactoryDefault();
 
-    shooterMotorOne.setNeutralMode(NeutralMode.Coast);
-    shooterMotorTwo.setNeutralMode(NeutralMode.Coast);
+    shooterMotorOne.setNeutralMode(NeutralMode.Brake);
+    shooterMotorTwo.setNeutralMode(NeutralMode.Brake);
 
     shooterMotorOne.setInverted(true);
     shooterMotorOne.setSensorPhase(false);
@@ -52,13 +51,13 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    shooterMotorOne.set(ControlMode.PercentOutput, -0.5);
-    shooterMotorTwo.set(ControlMode.PercentOutput, -0.5);
+    shooterMotorOne.set(ControlMode.PercentOutput, speed);
+    shooterMotorTwo.set(ControlMode.PercentOutput, speed);
   }
 
   public void shooterOn() {
     
-    speed = 0.25;
+    speed = -0.25;
   }
 
   public void shooterOff() {
