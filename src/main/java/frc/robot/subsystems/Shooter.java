@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
+import frc.robot.commands.ShooterCommand;
 
 public class Shooter extends SubsystemBase {
   private TalonFX shooterMotorOne;
@@ -35,6 +36,8 @@ public class Shooter extends SubsystemBase {
     shooterMotorOne.config_kP(0, .05);
     shooterMotorOne.config_kF(0, 0.0499999523);
     shooterMotorOne.config_kD(0, .9);
+
+    setDefaultCommand(new ShooterCommand(this));
   }
 
   public void shootBall(double speed) {
