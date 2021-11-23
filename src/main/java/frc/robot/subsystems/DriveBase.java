@@ -59,7 +59,6 @@ public class DriveBase extends SubsystemBase {
     rightMotorFront.set(ControlMode.PercentOutput, m2);
     leftMotorBack.set(ControlMode.PercentOutput, m3);
     leftMotorFront.set(ControlMode.PercentOutput, m4);
-  
   }
 public void setValues(double ySpeed, double xSpeed, double zRotation)
 {

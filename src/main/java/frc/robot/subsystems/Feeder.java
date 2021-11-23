@@ -11,7 +11,7 @@ public class Feeder extends SubsystemBase {
   private CANSparkMax feederMotorOne;
   private CANSparkMax feederMotorTwo;
 
-  private double speed = 0.25;
+  private double speed = 0;
 
   public Feeder() {
 
@@ -27,17 +27,10 @@ public class Feeder extends SubsystemBase {
     feederMotorOne.setSecondaryCurrentLimit(5);
     feederMotorTwo.setSmartCurrentLimit(5);
     feederMotorTwo.setSecondaryCurrentLimit(5);
-
-    setDefaultCommand(new FeederCommand(this));
   }
 
   @Override
   public void periodic() {
-    feederMotorOne.set(speed);
-    feederMotorTwo.set(-speed);
-  }
-
-  public void feederIn(double speed) {
     feederMotorOne.set(speed);
     feederMotorTwo.set(-speed);
   }

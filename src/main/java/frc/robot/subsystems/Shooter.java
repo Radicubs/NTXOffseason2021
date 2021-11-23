@@ -12,7 +12,7 @@ public class Shooter extends SubsystemBase {
   private TalonFX shooterMotorOne;
   private TalonFX shooterMotorTwo;
 
-  private double speed = 11500;
+  private double speed = 0;
   // private double speed = 0.1;
 
   public Shooter() {
@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
     shooterMotorOne.setNeutralMode(NeutralMode.Brake);
     shooterMotorTwo.setNeutralMode(NeutralMode.Brake);
 
-    shooterMotorOne.setInverted(true);
+    shooterMotorTwo.setInverted(true);
     shooterMotorOne.setSensorPhase(false);
     shooterMotorTwo.follow(shooterMotorOne);
     shooterMotorOne.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
@@ -35,29 +35,18 @@ public class Shooter extends SubsystemBase {
     shooterMotorOne.config_kP(0, .05);
     shooterMotorOne.config_kF(0, 0.0499999523);
     shooterMotorOne.config_kD(0, .9);
-
-    setDefaultCommand(new ShooterCommand(this));
   }
 
-  public void shootBall(double speed) {
-    // shooterMotorOne.set(ControlMode.PercentOutput, speed);
-    // shooterMotorOne.set(ControlMode.Velocity, -11500);
-    shooterMotorOne.set(ControlMode.Velocity, speed);
-    System.out.println("meow");
-    System.out.println(shooterMotorOne.getSelectedSensorVelocity());
-    System.out.println(shooterMotorOne.getMotorOutputPercent());
-    // shooterMotorTwo.set(ControlMode.PercentOutput, speed);
-  }
 
   @Override
   public void periodic() {
-    shooterMotorOne.set(ControlMode.PercentOutput, speed);
-    shooterMotorTwo.set(ControlMode.PercentOutput, speed);
+    shooterMotorOne.set(ControlMode.Velocity, speed);
+    shooterMotorTwo.set(ControlMode.Velocity, speed);
   }
 
   public void shooterOn() {
     
-    speed = -0.25;
+    speed = 10000;
   }
 
   public void shooterOff() {
