@@ -6,12 +6,12 @@ package frc.robot.subsystems;
 
 import frc.robot.RobotConstants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.MecanumDriveControl;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import frc.robot.commands.TankDrive;
 
 public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
@@ -48,7 +48,8 @@ public class DriveBase extends SubsystemBase {
     rightMotorFront.setNeutralMode(NeutralMode.Brake);
     rightMotorBack.setNeutralMode(NeutralMode.Brake);
 
-    setDefaultCommand(new MecanumDriveControl(this));
+    this.setDefaultCommand(new TankDrive(this));
+
   }
 
   @Override

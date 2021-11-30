@@ -2,10 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
-import frc.robot.commands.ElevatorCommand;
 
 public class Roller extends SubsystemBase {
   private CANSparkMax roller;
@@ -23,7 +21,7 @@ public class Roller extends SubsystemBase {
   }
 
   public void rollerOn() {
-    speed = 0.5;
+    speed = -1;
   }
   public void rollerOff() {
     speed = 0;

@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
-import frc.robot.commands.ShooterCommand;
 
 public class Shooter extends SubsystemBase {
   private TalonFX shooterMotorOne;
@@ -46,7 +45,7 @@ public class Shooter extends SubsystemBase {
 
   public void shooterOn() {
     
-    speed = 10000;
+    speed = 11500;
   }
 
   public void shooterOff() {
