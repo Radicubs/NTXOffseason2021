@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotConstants;
+import frc.robot.commands.MecanumDriveControl;
 import frc.robot.commands.TankDrive;
 
 import java.util.ArrayList;
@@ -60,14 +61,14 @@ public class DriveBase extends SubsystemBase {
 
       // Might interfere with PID
 
-      motor.setNeutralMode(NeutralMode.Coast);
+      motor.setNeutralMode(NeutralMode.Brake);
 
     }
 
     leftFront.setInverted(true);
     leftBack.setInverted(true);
 
-    setDefaultCommand(new TankDrive(this));
+    setDefaultCommand(new MecanumDriveControl(this));
 
 
   }

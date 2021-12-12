@@ -40,6 +40,7 @@ public class TankDrive extends CommandBase {
     if(Math.abs(left) < 0.01) left = 0;
     if(Math.abs(right) < 0.01) right = 0;
 
+
     driveBase.setValues(right, right, left, left);
   }
 
