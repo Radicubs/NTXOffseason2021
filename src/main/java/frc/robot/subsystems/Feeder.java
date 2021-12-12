@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
 
@@ -10,7 +9,7 @@ public class Feeder extends SubsystemBase {
   private CANSparkMax feederMotorOne;
   private CANSparkMax feederMotorTwo;
 
-  private double speed = 0.25;
+  private double speed = 0;
 
   public Feeder() {
 
@@ -34,11 +33,6 @@ public class Feeder extends SubsystemBase {
     feederMotorTwo.set(-speed);
   }
 
-  public void feederIn(double speed) {
-    feederMotorOne.set(speed);
-    feederMotorTwo.set(-speed);
-  }
-
   public void feederOn() {
     
     speed = 0.25;
@@ -46,7 +40,7 @@ public class Feeder extends SubsystemBase {
 
   public void feederOff() {
     
-    speed = 0.25;
+    speed = 0;
   }
 
   //@Override

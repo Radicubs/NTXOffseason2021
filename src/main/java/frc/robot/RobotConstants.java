@@ -13,7 +13,7 @@ public class RobotConstants {
   public static final int SHOOTER_RIGHT = 19;
 
   // SPARK MAX MOTOR CONTROLLERS
-  public static final int ROLLER = 11;
+  public static final int ROLLER = 9;
   public static final int FEEDER_RIGHT = 11;
   public static final int FEEDER_LEFT = 10;
   public static final int ELEVATOR_BACK = 9;
