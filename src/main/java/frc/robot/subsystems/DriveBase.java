@@ -4,81 +4,100 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.RobotConstants;
-import frc.robot.RobotContainer;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotConstants;
 import frc.robot.commands.TankDrive;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DriveBase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
-  // Right Motors
-  private WPI_TalonFX rightMotorFront;
-  private WPI_TalonFX rightMotorBack;
-
-  // Left Motors
-  private WPI_TalonFX leftMotorFront;
-  private WPI_TalonFX leftMotorBack;
-
-  private MecanumDrive m_robotDrive;
+  private WPI_TalonFX rightFront;
+  private WPI_TalonFX rightBack;
+  private WPI_TalonFX leftFront;
+  private WPI_TalonFX leftBack;
 
   public DriveBase() {
 
-    
-    // motors
-    rightMotorFront = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
-    rightMotorBack = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_BACK);
+    rightFront = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_FRONT);
+    rightBack = new WPI_TalonFX(RobotConstants.RIGHT_FALCON_BACK);
+    leftFront = new WPI_TalonFX(RobotConstants.LEFT_FALCON_FRONT);
+    leftBack = new WPI_TalonFX(RobotConstants.LEFT_FALCON_BACK);
 
-    leftMotorFront = new WPI_TalonFX(RobotConstants.LEFT_FALCON_FRONT);
-    leftMotorBack = new WPI_TalonFX(RobotConstants.LEFT_FALCON_BACK);
-    m_robotDrive = new MecanumDrive(leftMotorFront, leftMotorBack, rightMotorFront, rightMotorBack);
-    rightMotorFront.configFactoryDefault();
-    rightMotorBack.configFactoryDefault();
-    leftMotorFront.configFactoryDefault();
-    leftMotorBack.configFactoryDefault();
+    List<WPI_TalonFX> motors = Arrays.asList(rightBack, rightFront, leftBack, leftFront);
 
-    // Might interfere with PID
 
-    leftMotorFront.setNeutralMode(NeutralMode.Brake);
-    leftMotorBack.setNeutralMode(NeutralMode.Brake);
-    rightMotorFront.setNeutralMode(NeutralMode.Brake);
-    rightMotorBack.setNeutralMode(NeutralMode.Brake);
+    for(WPI_TalonFX motor : motors) {
+      motor.configFactoryDefault();
 
-    this.setDefaultCommand(new TankDrive(this));
+      motor.configNeutralDeadband(0.001);
+
+      /* Config sensor used for Primary PID [Velocity] */
+      motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,
+              Constants.kPIDLoopIdx,
+              Constants.kTimeoutMs);
+
+
+      /* Config the peak and nominal outputs */
+      motor.configNominalOutputForward(0, Constants.kTimeoutMs);
+      motor.configNominalOutputReverse(0, Constants.kTimeoutMs);
+      motor.configPeakOutputForward(1, Constants.kTimeoutMs);
+      motor.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+
+      /* Config the Velocity closed loop gains in slot0 */
+      motor.config_kF(Constants.kPIDLoopIdx, Constants.kF, Constants.kTimeoutMs);
+      motor.config_kP(Constants.kPIDLoopIdx, Constants.kP, Constants.kTimeoutMs);
+      motor.config_kI(Constants.kPIDLoopIdx, Constants.kI, Constants.kTimeoutMs);
+      motor.config_kD(Constants.kPIDLoopIdx, Constants.kD, Constants.kTimeoutMs);
+
+      // Might interfere with PID
+
+      motor.setNeutralMode(NeutralMode.Coast);
+
+    }
+
+    leftFront.setInverted(true);
+    leftBack.setInverted(true);
+
+    setDefaultCommand(new TankDrive(this));
+
 
   }
-
-  @Override
-  public void periodic() {}
 
   public void setValues(double m1, double m2, double m3, double m4) {
-    rightMotorBack.set(ControlMode.PercentOutput, m1);
-    rightMotorFront.set(ControlMode.PercentOutput, m2);
-    leftMotorBack.set(ControlMode.PercentOutput, m3);
-    leftMotorFront.set(ControlMode.PercentOutput, m4);
+    m1 = m1 * 2000.0 * 2048.0 / 600.0;
+    m2 = m2 * 2000.0 * 2048.0 / 600.0;
+    m3 = m3 * 2000.0 * 2048.0 / 600.0;
+    m4 = m4 * 2000.0 * 2048.0 / 600.0;
+
+    rightBack.set(TalonFXControlMode.Velocity, m1);
+    rightFront.set(TalonFXControlMode.Velocity, m2);
+    leftBack.set(TalonFXControlMode.Velocity, m3);
+    leftFront.set(TalonFXControlMode.Velocity, m4);
   }
-public void setValues(double ySpeed, double xSpeed, double zRotation)
-{
-  m_robotDrive.driveCartesian(ySpeed, xSpeed, zRotation);
-}
 
   @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-    RobotContainer r = new RobotContainer();
-    if (r.feeder_button.get()){
-      //Run feeder
-    }
-    if (r.elevator_button.get()){
-      //Run elevator
-    }
-    if (r.shooter_button.get()){
-      //Run shooter
-    }
+  public void periodic() {
+    /*
+    double stick = Robot.robotContainer.controller.getRawAxis(RobotConstants.LEFT_Y_AXIS) / 3;
+
+    System.out.println(stick);
+    if(Math.abs(stick) < 0.01) stick = 0;
+    System.out.println(stick);
+    double out = _talon.getMotorOutputPercent();
+
+    double targetVelocity_UnitsPer100ms = stick * 2000.0 * 2048.0 / 600.0;
+    /* 500 RPM in either direction
+    _talon.set(TalonFXControlMode.Velocity, targetVelocity_UnitsPer100ms); */
+
   }
 
   
